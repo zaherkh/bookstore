@@ -1,8 +1,12 @@
 package com.zaher.bookstore.bookstore.user;
 
+import com.zaher.bookstore.bookstore.order.Order;
+import com.zaher.bookstore.bookstore.order.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +17,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +25,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    OrderService userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -56,4 +64,8 @@ public class UserService implements UserDetailsService {
         return userRepository.insert(user);
     }
 
+    public Page<Order> findOrdersByUserid(String customerId, Pageable pageable) {
+        Page<Order> orders = userService.findOrderByCustomerId(customerId, pageable);
+        return orders;
+    }
 }

@@ -30,7 +30,7 @@ public class OrderController {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         }
         Book book = bookService.findById(order.getBookId());
-        if( ObjectUtils.isEmpty(book) && book.getStock().compareTo(order.getQuantity()) <= 0  ) {
+        if( ObjectUtils.isEmpty(book) || book.getStock().compareTo(order.getQuantity()) <= 0  ) {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         }
         book.setStock(book.getStock() - order.getQuantity());

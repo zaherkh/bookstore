@@ -1,6 +1,9 @@
 package com.zaher.bookstore.bookstore.user;
 
+import com.zaher.bookstore.bookstore.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -25,9 +28,10 @@ public class UserController {
         return new ResponseEntity<User>(savedUser, HttpStatus.OK);
     }
 
-    @GetMapping("orders/{userId}")
-    public ResponseEntity<Long> getOrders(@PathVariable Long userId) {
-        return new ResponseEntity<>(userId, HttpStatus.OK);
+    @GetMapping("orders")
+    public ResponseEntity<Page<Order>> getOrders(@RequestParam String customerId, Pageable pageable) {
+        Page<Order> orders = userService.findOrdersByUserid(customerId, pageable);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
 }

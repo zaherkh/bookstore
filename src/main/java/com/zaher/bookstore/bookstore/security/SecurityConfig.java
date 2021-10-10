@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
@@ -40,7 +41,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/login/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/v1/user/register").permitAll();
+
         http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("customer");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/user/order/add").hasAnyAuthority("customer");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/user/order/query/**").hasAnyAuthority("customer");
+
+        http.authorizeRequests().antMatchers(GET, "/api/v1/book/add").hasAnyAuthority("manager");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/book/updatestock").hasAnyAuthority("manager");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticatingFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

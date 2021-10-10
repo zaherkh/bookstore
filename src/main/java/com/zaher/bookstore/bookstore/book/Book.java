@@ -10,6 +10,7 @@ public class Book {
     private String id;
     private String name;
     private String author;
+    private Integer stock;
 
     public Book(String name, String author) {
         this.name = name;
@@ -38,6 +39,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
 }

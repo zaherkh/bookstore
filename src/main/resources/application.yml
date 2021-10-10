@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: "default"
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: 27017
+      database: bookstore
+      username: admin
+      password: XTakvoU0QL9X

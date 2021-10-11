@@ -3,6 +3,7 @@ All endpoints except login and register are protocted by jwt token system.
 User (customer) can have one of two role (customer, manager).
 Orinally customers have role of customer while amdin users have role of manager.
 When the system is starting it will check for existince of a manager user, if not found it will create one.
+According to user active role, user may access endpoints are may be deniyed access.
 
 MongoDb v4 is used.
 

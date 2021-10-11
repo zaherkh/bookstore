@@ -2,6 +2,7 @@ package com.zaher.bookstore.bookstore.order;
 
 import com.zaher.bookstore.bookstore.book.Book;
 import com.zaher.bookstore.bookstore.book.BookService;
+import com.zaher.bookstore.bookstore.dto.PreviousOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +41,13 @@ public class OrderController {
     }
 
     @GetMapping("query")
-    public ResponseEntity<Order> query(@RequestParam String orderId) {
+    public ResponseEntity<PreviousOrderDto> query(@RequestParam String orderId) {
         Order order = orderService.findById(orderId);
         if(ObjectUtils.isEmpty(order)) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        PreviousOrderDto previousOrderDto = orderService.mapOrderToPreviousOrderDto(order);
+        return new ResponseEntity<>(previousOrderDto, HttpStatus.OK);
     }
 
     @GetMapping("list")

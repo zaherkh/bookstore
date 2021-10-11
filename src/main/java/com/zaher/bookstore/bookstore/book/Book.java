@@ -11,6 +11,7 @@ public class Book {
     private String name;
     private String author;
     private Integer stock;
+    private Float price;
 
     public Book(String name, String author) {
         this.name = name;
@@ -47,6 +48,14 @@ public class Book {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
 }

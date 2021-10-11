@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface OrderRepository extends MongoRepository<Order, String> {
 
+    List<Order> findOrderByCustomerId(String customerId);
     Page<Order> findOrderByCustomerId(String customerId, Pageable pageable);
 
 }

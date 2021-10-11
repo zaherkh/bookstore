@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +26,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    OrderService userService;
+    OrderService orderService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -53,6 +52,11 @@ public class UserService implements UserDetailsService {
         return userOptional.isPresent()? userOptional.get() : null;
     }
 
+    public User findUserByRole(String role) {
+        Optional<User> userOptional = userRepository.findUserByRole(role);
+        return userOptional.isPresent()? userOptional.get() : null;
+    }
+
     public User findUserByEmail(String email) {
         Optional<User> userOptional = userRepository.findUserByEmail(email);
         return userOptional.isPresent()? userOptional.get() : null;
@@ -65,7 +69,12 @@ public class UserService implements UserDetailsService {
     }
 
     public Page<Order> findOrdersByUserid(String customerId, Pageable pageable) {
-        Page<Order> orders = userService.findOrderByCustomerId(customerId, pageable);
+        Page<Order> orders = orderService.findOrderByCustomerId(customerId, pageable);
+        return orders;
+    }
+
+    public List<Order> findOrdersByUserid(String customerId) {
+        List<Order> orders = orderService.findOrderByCustomerId(customerId);
         return orders;
     }
 }

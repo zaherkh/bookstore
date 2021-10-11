@@ -43,13 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/login/**").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/user/register").permitAll();
 
-        http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("customer");
-        http.authorizeRequests().antMatchers(POST, "/api/v1/user/order/add").hasAnyAuthority("customer");
-        http.authorizeRequests().antMatchers(POST, "/api/v1/user/order/query/**").hasAnyAuthority("customer");
-        http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("customer");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("manager", "customer");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/user/order/add").hasAnyAuthority("manager", "customer");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("manager", "customer");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/user/orders/**").hasAnyAuthority("manager", "customer");
 
         http.authorizeRequests().antMatchers(GET, "/api/v1/book/add").hasAnyAuthority("manager");
-        http.authorizeRequests().antMatchers(GET, "/api/v1/book/updatestock").hasAnyAuthority("manager");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/statistics/get").hasAnyAuthority("manager", "customer");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticatingFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
